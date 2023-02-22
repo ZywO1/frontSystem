@@ -18,7 +18,7 @@ export function detailInfo() {
     });
 }
 //修改密码
-export function updatepwd(oldpwd,newpwd) {
+export function updatepwd(oldpwd, newpwd) {
     return request({
         url: `/user/updatepwd`,
         method: "post",
@@ -27,4 +27,21 @@ export function updatepwd(oldpwd,newpwd) {
             newpwd,
         },
     });
+}
+
+//获取公告
+export function getNotice() {
+    return request({
+        url: '/user/getReport',
+        method: 'post'
+    })
+}
+
+//获取课程
+export function getMyLab(currentPage, pageSize) {
+    return request({
+        url: '/lesson/myLesson',
+        method: 'post',
+        data: { currentPage, pageSize }
+    })
 }

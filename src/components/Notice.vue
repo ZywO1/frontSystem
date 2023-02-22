@@ -10,8 +10,8 @@
         <template #header>
           <div class="card-header">
             <span>{{ item.title }}</span>
-            <div style="float: right; margin-top: -5px;">
-              发布人：{{ item.username }}
+            <div style="float: right; margin-top: -5px">
+              发布人：{{ item.publisher }}
             </div>
           </div>
         </template>
@@ -32,27 +32,29 @@ export default {
 };
 </script>
 <script setup>
-const notify = [
-  {
-    id: 0,
-    title: "今天不上课",
-    content: "由于机房爆炸导致网络原因。。。。。。。。",
-    username: "FCJ",
-    time: "2017-12-12",
-  },
-  {
-    id: 1,
-    title: "今天不上课",
-    content: "由于机房爆炸导致网络原因。。。。。。。。",
-    username: "FCJ",
-    time: "2017-12-12",
-  },
-];
+import { onMounted, ref } from "vue";
+import { getNotice } from "api/user/user";
+import { ElMessage } from "element-plus";
+let notify = ref([]);
+
+onMounted(async () => {
+  getNotice()
+    .then((res) => {
+      console.log(res);
+      notify.value = res.data;
+    })
+    .catch((err) => {
+      ElMessage({
+        type: "warning",
+        message: err.message || "用户名或密码错误",
+      });
+    });
+});
 </script>
 
 <style scoped>
-.crumbs{
-    margin-bottom: 20px;
+.crumbs {
+  margin-bottom: 20px;
 }
 .box-card {
   margin-bottom: 10px;
